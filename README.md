@@ -8,18 +8,22 @@ This module allows you to view the disk usage of your cPanel email accounts from
 
 ## Installation
 
-- Copy the files from modules/servers/cpanelemailusage to your WHMCS installation directory.
+- Copy the files from `modules/servers/cpanelemailusage` to your WHMCS installation directory.
 - Add new cPanel servers specifying cPanel Email Usage as the server type. No need to specify 2087 as port as it will assume that port number by default.
 
-## Screenshot
+In WHMCS, all email accounts that's filled in the `domain` field will now start showing usage.
+
+That also means that if you have overuse turned on, clients will be automatically billed.
+
+## Screenshots
 
 Client area showing client's email disk usage and disk limit:
 
 ![Client Area Resource Usage](/screenshots/client_area_resource_usage.png)
 
-In WHMCS, all email accounts that's filled in the `domain` field will now start showing usage.
+Admin area showing client's email disk usage and disk limit:
 
-That also means that if you have overuse turned on, clients will be automatically billed.
+![Admin Area Disk Usage](/screenshots/admin_area_disk_usage.png)
 
 ## Development
 
