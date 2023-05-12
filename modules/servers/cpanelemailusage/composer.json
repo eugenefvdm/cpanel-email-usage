@@ -1,0 +1,5 @@
+{
+    "require": {
+        "eugenevdm/whm-api": "^0.0.1"
+    }
+}

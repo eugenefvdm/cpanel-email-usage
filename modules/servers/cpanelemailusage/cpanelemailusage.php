@@ -36,10 +36,12 @@ if (!defined("WHMCS")) {
 
 // Require any libraries needed for the module to function.
 // require_once __DIR__ . '/path/to/library/loader.php';
+require_once __DIR__ . '/vendor/autoload.php';
 //
 // Also, perform any initialization required by the service's library.
 
 use \WHMCS\Database\Capsule;
+use Eugenevdm\WhmApi\Cpanel;
 
 /**
  * Define module related metadata.
@@ -445,12 +447,66 @@ function cpanelemailusage_Renew(array $params)
  */
 function cpanelemailusage_UsageUpdate($params) {
     $serverid = $params['serverid'];
-    $serverhostname = $params['serverhostname'];
-    $serverip = $params['serverip'];
-    $serverusername = $params['serverusername'];
-    $serverpassword = $params['serverpassword'];
-    $serveraccesshash = $params['serveraccesshash'];
-    $serversecure = $params['serversecure'];
+
+    $connection = [
+        'host'        =>  "https://" . $params['serverhostname'] . ':2087',
+        'username'    =>  $params['serverusername'],
+        'auth_type'   =>  'password',
+        'password'    =>  $params['serverpassword'],
+    ];
+
+    try {
+        $api = new Cpanel($connection);
+    } catch (\Exception $e) {
+        $message = "cPanel API error: ". $e->getMessage();
+        echo $message;
+        return $message;
+    }
+
+    $accounts = $api->listaccts();
+
+    foreach($accounts['acct'] as $account) {
+        $data = $api->execute_action(
+            '3',
+            'Email',
+            'list_pops_with_disk',
+            $account['user']
+        );
+
+        $results = [];
+
+        $counter = 0;
+
+        foreach($data['result']['data'] as $emailAccount) {
+            $results[$counter]['domain'] = $emailAccount['login'];
+            $results[$counter]['diskusage'] = $emailAccount['diskused'];
+            $results[$counter]['disklimit'] = $emailAccount['diskquota'];
+            $counter++;
+
+            \WHMCS\Database\Capsule::table('tblhosting')
+                ->where('server', $serverid)
+                ->where('domain', $emailAccount['login'])
+                ->update([
+                    'diskusage' => $emailAccount['diskused'],
+                    'disklimit' => $emailAccount['diskquota'],
+                    'lastupdate' => Capsule::raw('now()'),
+                ]);
+        }
+
+        // echo print_r($results, true);
+    }
+
+//    echo print_r($results, true);
+
+    // echo print_r($accounts, true);
+
+//    $serverid = $params['serverid'];
+//    $serverhostname = $params['serverhostname'];
+//    $serverip = $params['serverip'];
+//    $serverusername = $params['serverusername'];
+//    $serverpassword = $params['serverpassword'];
+//    $serveraccesshash = $params['serveraccesshash'];
+//    $serversecure = $params['serversecure'];
 
     // Run connection to retrieve usage for all domains/accounts on $serverid
     // E.g.:

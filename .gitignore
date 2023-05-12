@@ -2,7 +2,7 @@
 phpunit.xml
 .phpunit.result.cache
 
-# Composer
+# This Composer
 composer.phar
 composer.lock
 vendor/*
@@ -10,3 +10,5 @@ vendor/*
 # IDE
 .idea/*
 
+# Vendor specific Composer files used by this library
+/modules/servers/cpanelemailusage/vendor/*
