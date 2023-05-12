@@ -409,6 +409,8 @@ function cpanelemailusage_Renew(array $params)
 function cpanelemailusage_UsageUpdate($params) {
     $serverid = $params['serverid'];
 
+    die(print_r($params, true));
+
     $connection = [
         'host'        =>  "https://" . $params['serverhostname'] . ':2087',
         'username'    =>  $params['serverusername'],
@@ -433,17 +435,7 @@ function cpanelemailusage_UsageUpdate($params) {
             'list_pops_with_disk',
             $account['user']
         );
-
-        $results = [];
-
-        $counter = 0;
-
         foreach($data['result']['data'] as $emailAccount) {
-            $results[$counter]['domain'] = $emailAccount['login'];
-            $results[$counter]['diskusage'] = $emailAccount['diskused'];
-            $results[$counter]['disklimit'] = $emailAccount['diskquota'];
-            $counter++;
-
             \WHMCS\Database\Capsule::table('tblhosting')
                 ->where('server', $serverid)
                 ->where('domain', $emailAccount['login'])
@@ -453,57 +445,6 @@ function cpanelemailusage_UsageUpdate($params) {
                     'lastupdate' => Capsule::raw('now()'),
                 ]);
         }
-
-        // echo print_r($results, true);
-    }
-
-//    echo print_r($results, true);
-
-    // echo print_r($accounts, true);
-
-//    $serverid = $params['serverid'];
-//    $serverhostname = $params['serverhostname'];
-//    $serverip = $params['serverip'];
-//    $serverusername = $params['serverusername'];
-//    $serverpassword = $params['serverpassword'];
-//    $serveraccesshash = $params['serveraccesshash'];
-//    $serversecure = $params['serversecure'];
-
-    // Run connection to retrieve usage for all domains/accounts on $serverid
-    // E.g.:
-    $results = [
-        [
-            'domain' => 'example1.com',
-            'diskusage' => 1100,
-            'disklimit' => 1000,
-            'bandwidth' => 2000,
-            'bwlimit' => 1500,
-        ],
-        [
-            'domain' => 'example2.com',
-            'diskusage' => 800,
-            'disklimit' => 1000,
-            'bandwidth' => 2500,
-            'bwlimit' => 1500,
-        ],
-    ];
-
-    // Now loop through results and update DB
-    foreach ($results AS $domain => $values) {
-        try {
-            \WHMCS\Database\Capsule::table('tblhosting')
-                ->where('server', $serverid)
-                ->where('domain', $values['domain'])
-                ->update([
-                    'diskusage' => $values['diskusage'],
-                    'disklimit' => $values['disklimit'],
-                    'bwusage' => $values['bandwidth'],
-                    'bwlimit' => $values['bwlimit'],
-                    'lastupdate' => Capsule::raw('now()'),
-                ]);
-        } catch (\Exception $e) {
-            // Handle any error which may occur
-        } 
     }
 
     logModuleCall(
@@ -511,9 +452,10 @@ function cpanelemailusage_UsageUpdate($params) {
         __FUNCTION__,
         $params,
         "message",
-        "records updated"
+        "cPanel email usage updated for " . $params['serverhostname']
     );
 
+    return 'success';
 }
 
 /**
@@ -572,10 +514,7 @@ function cpanelemailusage_TestConnection(array $params)
  */
 function cpanelemailusage_AdminCustomButtonArray()
 {
-    return array(
-        "Button 1 Display Value" => "buttonOneFunction",
-        "Button 2 Display Value" => "buttonTwoFunction",
-    );
+    return [];
 }
 
 /**
@@ -591,10 +530,7 @@ function cpanelemailusage_AdminCustomButtonArray()
  */
 function cpanelemailusage_ClientAreaCustomButtonArray()
 {
-    return array(
-        "Action 1 Display Value" => "actionOneFunction",
-        "Action 2 Display Value" => "actionTwoFunction",
-    );
+    return [];
 }
 
 /**
@@ -688,24 +624,7 @@ function cpanelemailusage_actionOneFunction(array $params)
 function cpanelemailusage_AdminServicesTabFields(array $params)
 {
     try {
-        // Call the service's function, using the values provided by WHMCS in
-        // `$params`.
-        $response = array();
-        $response['numApples'] = 1;
-        $response['numOranges'] = 2;
-        $response['lastLoginTimestamp'] = 1706822400; // 2024-01-01 12:00:00
-        $response['textvalue'] = "the_value";
-
-        // Return an array based on the function's response.
-        return array(
-            'Number of Apples' => (int) $response['numApples'],
-            'Number of Oranges' => (int) $response['numOranges'],
-            'Last Access Date' => date("Y-m-d H:i:s", $response['lastLoginTimestamp']),
-            'Something Editable' => '<input type="hidden" name="cpanelemailusage_original_uniquefieldname" '
-                . 'value="' . htmlspecialchars($response['textvalue']) . '" />'
-                . '<input type="text" name="cpanelemailusage_uniquefieldname"'
-                . 'value="' . htmlspecialchars($response['textvalue']) . '" />',
-        );
+        return [];
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
@@ -739,13 +658,9 @@ function cpanelemailusage_AdminServicesTabFields(array $params)
 function cpanelemailusage_AdminServicesTabFieldsSave(array $params)
 {
     // Fetch form submission variables.
-    $originalFieldValue = isset($_REQUEST['cpanelemailusage_original_uniquefieldname'])
-        ? $_REQUEST['cpanelemailusage_original_uniquefieldname']
-        : '';
+    $originalFieldValue = $_REQUEST['cpanelemailusage_original_uniquefieldname'] ?? '';
 
-    $newFieldValue = isset($_REQUEST['cpanelemailusage_uniquefieldname'])
-        ? $_REQUEST['cpanelemailusage_uniquefieldname']
-        : '';
+    $newFieldValue = $_REQUEST['cpanelemailusage_uniquefieldname'] ?? '';
 
     // Look for a change in value to avoid making unnecessary service calls.
     if ($originalFieldValue != $newFieldValue) {
@@ -907,13 +822,8 @@ function cpanelemailusage_ClientArea(array $params)
         $extraVariable1 = 'abc';
         $extraVariable2 = '123';
 
-        return array(
-            'tabOverviewReplacementTemplate' => $templateFile,
-            'templateVariables' => array(
-                'extraVariable1' => $extraVariable1,
-                'extraVariable2' => $extraVariable2,
-            ),
-        );
+        return [];
+
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
