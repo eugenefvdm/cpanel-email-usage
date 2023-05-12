@@ -34,9 +34,13 @@ if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 
+if (!class_exists('PHPUnit\Framework\TestCase')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 // Require any libraries needed for the module to function.
 // require_once __DIR__ . '/path/to/library/loader.php';
-require_once __DIR__ . '/vendor/autoload.php';
+// require_once __DIR__ . '/vendor/autoload.php';
 //
 // Also, perform any initialization required by the service's library.
 
@@ -91,50 +95,7 @@ function cpanelemailusage_MetaData()
  */
 function cpanelemailusage_ConfigOptions()
 {
-    return array(
-        // a text field type allows for single line text input
-        'Text Field' => array(
-            'Type' => 'text',
-            'Size' => '25',
-            'Default' => '1024',
-            'Description' => 'Enter in megabytes',
-        ),
-        // a password field type allows for masked text input
-        'Password Field' => array(
-            'Type' => 'password',
-            'Size' => '25',
-            'Default' => '',
-            'Description' => 'Enter secret value here',
-        ),
-        // the yesno field type displays a single checkbox option
-        'Checkbox Field' => array(
-            'Type' => 'yesno',
-            'Description' => 'Tick to enable',
-        ),
-        // the dropdown field type renders a select menu of options
-        'Dropdown Field' => array(
-            'Type' => 'dropdown',
-            'Options' => array(
-                'option1' => 'Display Value 1',
-                'option2' => 'Second Option',
-                'option3' => 'Another Option',
-            ),
-            'Description' => 'Choose one',
-        ),
-        // the radio field type displays a series of radio button options
-        'Radio Field' => array(
-            'Type' => 'radio',
-            'Options' => 'First Option,Second Option,Third Option',
-            'Description' => 'Choose your option!',
-        ),
-        // the textarea field type allows for multi-line text input
-        'Textarea Field' => array(
-            'Type' => 'textarea',
-            'Rows' => '3',
-            'Cols' => '60',
-            'Description' => 'Freeform multi-line text input field',
-        ),
-    );
+    return [];
 }
 
 /**
