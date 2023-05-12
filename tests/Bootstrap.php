@@ -18,7 +18,7 @@ if (!defined('WHMCS')) {
 }
 
 // Include the WHMCS module.
-require_once __DIR__ . '/../modules/servers/provisioningmodule/provisioningmodule.php';
+require_once __DIR__ . '/../modules/servers/cpanelemailusage/cpanelemailusage.php';
 
 /**
  * Mock logModuleCall function for testing purposes.

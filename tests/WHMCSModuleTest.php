@@ -17,7 +17,7 @@
 class WHMCSModuleTest extends \PHPUnit\Framework\TestCase
 {
     /** @var string $moduleName */
-    protected $moduleName = 'provisioningmodule';
+    protected $moduleName = 'cpanelemailusage';
 
     /**
      * Asserts the required config options function is defined.
@@ -66,9 +66,7 @@ class WHMCSModuleTest extends \PHPUnit\Framework\TestCase
      */
     public function testFunctionsReturnAppropriateDataType(string $function, string $returnType)
     {
-//        echo $function . "\n";
         if (function_exists($this->moduleName . '_' . $function)) {
-//            echo $function . "\n";
             $result = call_user_func($this->moduleName . '_' . $function, array());
             if ($returnType == 'array') {
                 $this->assertTrue(is_array($result));

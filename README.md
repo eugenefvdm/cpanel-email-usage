@@ -1,21 +1,33 @@
-# WHMCS Server Provisioning Template #
+# WHMCS cPanel Email Usage #
 
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/eugenevdm/whmcs-provisioning-template/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/eugenevdm/whmcs-provisioning-template/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/eugenevdm/cpanel-email-usage/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/eugenevdm/cpanel-email-usage/actions?query=workflow%3Arun-tests+branch%3Amain)
 
 ## Summary ##
 
-This is a custom WHMCS server provisioning module template.
+This module allows you to view the disk usage of your cPanel email accounts from within WHMCS.
 
-It is based on the [official one](https://github.com/WHMCS/sample-provisioning-module) from WHMCS with the following added:
+## Development
 
-- Made tests to pass with PHPUnit 10
-- Added missing Update Usage module call 
-- Added a PHPUnit Tests YML file and badge
-
-For more information, please refer to the documentation at:
-https://developers.whmcs.com/provisioning-modules/
+```bash
+cd /Users/username/Code/whmcs/modules/servers
+ln -s /Users/username/Code/whmcs-modules/cpanel-email-usage/modules/servers/cpanelemailusage 
+```
 
 ## Testing
+
+### Usage Update Test
+
+To test if the module is working, run the following command:
+
+```bash
+php -q /Users/username/Code/whmcs/crons/cron.php do --UpdateServerUsage
+```
+
+After go to the WHMCS UI and see if there is usage.
+
+### Unit Tests
+
+To test software, do this:
 
 ```bash
 composer test

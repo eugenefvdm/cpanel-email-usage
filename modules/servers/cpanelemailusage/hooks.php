@@ -71,7 +71,7 @@ add_hook('ClientAreaPrimaryNavbar', 1, function ($menu)
             ->addChild(
                 'Provisioning Module Products',
                 array(
-                    'uri' => 'clientarea.php?action=services&module=provisioningmodule',
+                    'uri' => 'clientarea.php?action=services&module=cpanelemailusage',
                     'order' => 15,
                 )
             );
@@ -110,7 +110,7 @@ add_hook('ClientAreaSecondarySidebar', 1, function ($secondarySidebar)
         $customPanel->addChild(
                 'Sample Link Menu Item',
                 array(
-                    'uri' => 'clientarea.php?action=services&module=provisioningmodule',
+                    'uri' => 'clientarea.php?action=services&module=cpanelemailusage',
                     'icon'  => 'fa-list-alt',
                     'order' => 2,
                 )

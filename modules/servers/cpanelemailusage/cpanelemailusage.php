@@ -15,8 +15,8 @@
  *
  * Within the module itself, all functions must be prefixed with the module
  * filename, followed by an underscore, and then the function name. For this
- * example file, the filename is "provisioningmodule" and therefore all
- * functions begin "provisioningmodule_".
+ * example file, the filename is "cpanelemailusage" and therefore all
+ * functions begin "cpanelemailusage_".
  *
  * If your module or third party API does not support a given function, you
  * should not define that function within your module. Only the _ConfigOptions
@@ -39,8 +39,10 @@ if (!defined("WHMCS")) {
 //
 // Also, perform any initialization required by the service's library.
 
+use \WHMCS\Database\Capsule;
+
 /**
- * Define module related meta data.
+ * Define module related metadata.
  *
  * Values returned here are used to determine module related abilities and
  * settings.
@@ -49,14 +51,14 @@ if (!defined("WHMCS")) {
  *
  * @return array
  */
-function provisioningmodule_MetaData()
+function cpanelemailusage_MetaData()
 {
     return array(
-        'DisplayName' => 'Demo Provisioning Module',
+        'DisplayName' => 'cPanel Email Usage',
         'APIVersion' => '1.1', // Use API Version 1.1
         'RequiresServer' => true, // Set true if module requires a server to work
-        'DefaultNonSSLPort' => '1111', // Default Non-SSL Connection Port
-        'DefaultSSLPort' => '1112', // Default SSL Connection Port
+//        'DefaultNonSSLPort' => '1111', // Default Non-SSL Connection Port
+//        'DefaultSSLPort' => '1112', // Default SSL Connection Port
         'ServiceSingleSignOnLabel' => 'Login to Panel as User',
         'AdminSingleSignOnLabel' => 'Login to Panel as Admin',
     );
@@ -85,7 +87,7 @@ function provisioningmodule_MetaData()
  *
  * @return array
  */
-function provisioningmodule_ConfigOptions()
+function cpanelemailusage_ConfigOptions()
 {
     return array(
         // a text field type allows for single line text input
@@ -149,7 +151,7 @@ function provisioningmodule_ConfigOptions()
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_CreateAccount(array $params)
+function cpanelemailusage_CreateAccount(array $params)
 {
     try {
         // Call the service's provisioning function, using the values provided
@@ -171,7 +173,7 @@ function provisioningmodule_CreateAccount(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -197,7 +199,7 @@ function provisioningmodule_CreateAccount(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_SuspendAccount(array $params)
+function cpanelemailusage_SuspendAccount(array $params)
 {
     try {
         // Call the service's suspend function, using the values provided by
@@ -205,7 +207,7 @@ function provisioningmodule_SuspendAccount(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -231,7 +233,7 @@ function provisioningmodule_SuspendAccount(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_UnsuspendAccount(array $params)
+function cpanelemailusage_UnsuspendAccount(array $params)
 {
     try {
         // Call the service's unsuspend function, using the values provided by
@@ -239,7 +241,7 @@ function provisioningmodule_UnsuspendAccount(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -264,7 +266,7 @@ function provisioningmodule_UnsuspendAccount(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_TerminateAccount(array $params)
+function cpanelemailusage_TerminateAccount(array $params)
 {
     try {
         // Call the service's terminate function, using the values provided by
@@ -272,7 +274,7 @@ function provisioningmodule_TerminateAccount(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -301,7 +303,7 @@ function provisioningmodule_TerminateAccount(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_ChangePassword(array $params)
+function cpanelemailusage_ChangePassword(array $params)
 {
     try {
         // Call the service's change password function, using the values
@@ -318,7 +320,7 @@ function provisioningmodule_ChangePassword(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -347,7 +349,7 @@ function provisioningmodule_ChangePassword(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_ChangePackage(array $params)
+function cpanelemailusage_ChangePackage(array $params)
 {
     try {
         // Call the service's change password function, using the values
@@ -365,7 +367,7 @@ function provisioningmodule_ChangePackage(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -390,7 +392,7 @@ function provisioningmodule_ChangePackage(array $params)
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_Renew(array $params)
+function cpanelemailusage_Renew(array $params)
 {
     try {
         // Call the service's provisioning function, using the values provided
@@ -412,7 +414,7 @@ function provisioningmodule_Renew(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -441,7 +443,7 @@ function provisioningmodule_Renew(array $params)
  * @see https://developers.whmcs.com/provisioning-modules/usage-update/
  *
  */
-function mymodule_UsageUpdate($params) {
+function cpanelemailusage_UsageUpdate($params) {
     $serverid = $params['serverid'];
     $serverhostname = $params['serverhostname'];
     $serverip = $params['serverip'];
@@ -486,6 +488,15 @@ function mymodule_UsageUpdate($params) {
             // Handle any error which may occur
         } 
     }
+
+    logModuleCall(
+        'cpanelemailusage',
+        __FUNCTION__,
+        $params,
+        "message",
+        "records updated"
+    );
+
 }
 
 /**
@@ -505,7 +516,7 @@ function mymodule_UsageUpdate($params) {
  *
  * @return array
  */
-function provisioningmodule_TestConnection(array $params)
+function cpanelemailusage_TestConnection(array $params)
 {
     try {
         // Call the service's connection test function.
@@ -515,7 +526,7 @@ function provisioningmodule_TestConnection(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -538,11 +549,11 @@ function provisioningmodule_TestConnection(array $params)
  * Define additional actions that an admin user can perform for an
  * instance of a product/service.
  *
- * @see provisioningmodule_buttonOneFunction()
+ * @see cpanelemailusage_buttonOneFunction()
  *
  * @return array
  */
-function provisioningmodule_AdminCustomButtonArray()
+function cpanelemailusage_AdminCustomButtonArray()
 {
     return array(
         "Button 1 Display Value" => "buttonOneFunction",
@@ -561,7 +572,7 @@ function provisioningmodule_AdminCustomButtonArray()
  *
  * @return array
  */
-function provisioningmodule_ClientAreaCustomButtonArray()
+function cpanelemailusage_ClientAreaCustomButtonArray()
 {
     return array(
         "Action 1 Display Value" => "actionOneFunction",
@@ -580,11 +591,11 @@ function provisioningmodule_ClientAreaCustomButtonArray()
  * @param array $params common module parameters
  *
  * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
- * @see provisioningmodule_AdminCustomButtonArray()
+ * @see cpanelemailusage_AdminCustomButtonArray()
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_buttonOneFunction(array $params)
+function cpanelemailusage_buttonOneFunction(array $params)
 {
     try {
         // Call the service's function, using the values provided by WHMCS in
@@ -592,7 +603,7 @@ function provisioningmodule_buttonOneFunction(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -616,11 +627,11 @@ function provisioningmodule_buttonOneFunction(array $params)
  * @param array $params common module parameters
  *
  * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
- * @see provisioningmodule_ClientAreaCustomButtonArray()
+ * @see cpanelemailusage_ClientAreaCustomButtonArray()
  *
  * @return string "success" or an error message
  */
-function provisioningmodule_actionOneFunction(array $params)
+function cpanelemailusage_actionOneFunction(array $params)
 {
     try {
         // Call the service's function, using the values provided by WHMCS in
@@ -628,7 +639,7 @@ function provisioningmodule_actionOneFunction(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -653,11 +664,11 @@ function provisioningmodule_actionOneFunction(array $params)
  * @param array $params common module parameters
  *
  * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
- * @see provisioningmodule_AdminServicesTabFieldsSave()
+ * @see cpanelemailusage_AdminServicesTabFieldsSave()
  *
  * @return array
  */
-function provisioningmodule_AdminServicesTabFields(array $params)
+function cpanelemailusage_AdminServicesTabFields(array $params)
 {
     try {
         // Call the service's function, using the values provided by WHMCS in
@@ -673,15 +684,15 @@ function provisioningmodule_AdminServicesTabFields(array $params)
             'Number of Apples' => (int) $response['numApples'],
             'Number of Oranges' => (int) $response['numOranges'],
             'Last Access Date' => date("Y-m-d H:i:s", $response['lastLoginTimestamp']),
-            'Something Editable' => '<input type="hidden" name="provisioningmodule_original_uniquefieldname" '
+            'Something Editable' => '<input type="hidden" name="cpanelemailusage_original_uniquefieldname" '
                 . 'value="' . htmlspecialchars($response['textvalue']) . '" />'
-                . '<input type="text" name="provisioningmodule_uniquefieldname"'
+                . '<input type="text" name="cpanelemailusage_uniquefieldname"'
                 . 'value="' . htmlspecialchars($response['textvalue']) . '" />',
         );
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -706,17 +717,17 @@ function provisioningmodule_AdminServicesTabFields(array $params)
  * @param array $params common module parameters
  *
  * @see https://developers.whmcs.com/provisioning-modules/module-parameters/
- * @see provisioningmodule_AdminServicesTabFields()
+ * @see cpanelemailusage_AdminServicesTabFields()
  */
-function provisioningmodule_AdminServicesTabFieldsSave(array $params)
+function cpanelemailusage_AdminServicesTabFieldsSave(array $params)
 {
     // Fetch form submission variables.
-    $originalFieldValue = isset($_REQUEST['provisioningmodule_original_uniquefieldname'])
-        ? $_REQUEST['provisioningmodule_original_uniquefieldname']
+    $originalFieldValue = isset($_REQUEST['cpanelemailusage_original_uniquefieldname'])
+        ? $_REQUEST['cpanelemailusage_original_uniquefieldname']
         : '';
 
-    $newFieldValue = isset($_REQUEST['provisioningmodule_uniquefieldname'])
-        ? $_REQUEST['provisioningmodule_uniquefieldname']
+    $newFieldValue = isset($_REQUEST['cpanelemailusage_uniquefieldname'])
+        ? $_REQUEST['cpanelemailusage_uniquefieldname']
         : '';
 
     // Look for a change in value to avoid making unnecessary service calls.
@@ -727,7 +738,7 @@ function provisioningmodule_AdminServicesTabFieldsSave(array $params)
         } catch (Exception $e) {
             // Record the error in WHMCS's module log.
             logModuleCall(
-                'provisioningmodule',
+                'cpanelemailusage',
                 __FUNCTION__,
                 $params,
                 $e->getMessage(),
@@ -752,7 +763,7 @@ function provisioningmodule_AdminServicesTabFieldsSave(array $params)
  *
  * @return array
  */
-function provisioningmodule_ServiceSingleSignOn(array $params)
+function cpanelemailusage_ServiceSingleSignOn(array $params)
 {
     try {
         // Call the service's single sign-on token retrieval function, using the
@@ -767,7 +778,7 @@ function provisioningmodule_ServiceSingleSignOn(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -798,7 +809,7 @@ function provisioningmodule_ServiceSingleSignOn(array $params)
  *
  * @return array
  */
-function provisioningmodule_AdminSingleSignOn(array $params)
+function cpanelemailusage_AdminSingleSignOn(array $params)
 {
     try {
         // Call the service's single sign-on admin token retrieval function,
@@ -813,7 +824,7 @@ function provisioningmodule_AdminSingleSignOn(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
@@ -857,7 +868,7 @@ function provisioningmodule_AdminSingleSignOn(array $params)
  *
  * @return array
  */
-function provisioningmodule_ClientArea(array $params)
+function cpanelemailusage_ClientArea(array $params)
 {
     // Determine the requested action and set service call parameters based on
     // the action.
@@ -889,7 +900,7 @@ function provisioningmodule_ClientArea(array $params)
     } catch (Exception $e) {
         // Record the error in WHMCS's module log.
         logModuleCall(
-            'provisioningmodule',
+            'cpanelemailusage',
             __FUNCTION__,
             $params,
             $e->getMessage(),
