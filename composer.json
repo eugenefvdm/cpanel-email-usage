@@ -1,0 +1,19 @@
+{
+    "name": "eugenevdm/whmcs-provisioning-template",
+    "description": "Custom Template for WHMCS Server Provisioning",
+    "keywords": [
+        "php",
+        "whmcs",
+        "server provisioning module"
+    ],
+    "license": "MIT",
+    "require" : {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
